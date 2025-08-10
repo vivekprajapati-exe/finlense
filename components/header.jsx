@@ -21,16 +21,44 @@ function Header() {
           {/* Auth Buttons */}
           <div className="flex items-center space-x-4">
             <SignedOut>
-              <SignUpButton forceRedirectUrl='/dashboard' >
-              <Button className="bg-white text-black px-4 py-2 rounded hover:bg-gray-200 transition-colors">
-                Sign Up
-              </Button>
-              </SignUpButton>
+              <div className="flex items-center space-x-2">
+                <SignInButton 
+                  mode="modal" 
+                  forceRedirectUrl="/dashboard"
+                  fallbackRedirectUrl="/dashboard"
+                >
+                  <Button variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-black">
+                    Sign In
+                  </Button>
+                </SignInButton>
+                <SignUpButton 
+                  mode="modal" 
+                  forceRedirectUrl="/dashboard"
+                  fallbackRedirectUrl="/dashboard"
+                >
+                  <Button className="bg-white text-black px-4 py-2 rounded hover:bg-gray-200 transition-colors">
+                    Sign Up
+                  </Button>
+                </SignUpButton>
+              </div>
             </SignedOut>
 
-            
             <SignedIn>
-              <UserButton signInUrl='/dashboard'/>
+              <div className="flex items-center space-x-2">
+                <Link href="/dashboard">
+                  <Button variant="outline" size="sm" className="border-gray-600 text-gray-300 hover:bg-gray-800">
+                    Dashboard
+                  </Button>
+                </Link>
+                <UserButton 
+                  afterSignOutUrl="/"
+                  appearance={{
+                    elements: {
+                      avatarBox: "h-8 w-8"
+                    }
+                  }}
+                />
+              </div>
             </SignedIn>
           </div>
         </div>

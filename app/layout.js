@@ -3,7 +3,7 @@ import "./globals.css";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { ClerkProvider } from "@clerk/nextjs";
-
+import { AuthCheck } from "@/components/AuthCheck";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,6 +17,7 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
     <html lang="en">
       <body className={`${inter.className} bg-black text-white`}>
+        <AuthCheck />
         <Header />
           <main className="min-h-screen">
             {children}
