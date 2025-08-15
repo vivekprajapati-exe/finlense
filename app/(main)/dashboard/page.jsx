@@ -1,7 +1,7 @@
 import { checkUser } from "@/lib/checkUser";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { CreateAccountDrawer } from "@/components/create-account-drawer";
+import { CreateAccountDrawer } from "@/components/create-account-drawer-swaraj";
 import { getUserAccounts, getDashboardData } from "@/actions/dashboard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
