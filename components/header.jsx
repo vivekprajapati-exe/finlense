@@ -4,22 +4,25 @@ import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@cl
 import Link from 'next/link'
 import { Eye } from 'lucide-react'
 import { Button } from './ui/button'
+import { ThemeToggle } from './theme-toggle'
 
 function Header() {
   return (
-    <header className="bg-black border-b border-gray-800 sticky top-0 z-50">
+    <header className="bg-background border-b border-muted/40 sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="bg-white p-1 rounded">
-              <Eye className="h-6 w-6 text-black" />
+            <div className="bg-primary p-1 rounded">
+              <Eye className="h-6 w-6 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold text-white">FinLense</span>
+            <span className="text-xl font-bold">FinLense</span>
           </Link>
 
           {/* Auth Buttons */}
           <div className="flex items-center space-x-4">
+            <ThemeToggle />
+            
             <SignedOut>
               <div className="flex items-center space-x-2">
                 <SignInButton 
@@ -27,7 +30,7 @@ function Header() {
                   forceRedirectUrl="/dashboard"
                   fallbackRedirectUrl="/dashboard"
                 >
-                  <Button variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-black">
+                  <Button variant="outline">
                     Sign In
                   </Button>
                 </SignInButton>
@@ -36,7 +39,7 @@ function Header() {
                   forceRedirectUrl="/dashboard"
                   fallbackRedirectUrl="/dashboard"
                 >
-                  <Button className="bg-white text-black px-4 py-2 rounded hover:bg-gray-200 transition-colors">
+                  <Button>
                     Sign Up
                   </Button>
                 </SignUpButton>
@@ -46,7 +49,7 @@ function Header() {
             <SignedIn>
               <div className="flex items-center space-x-2">
                 <Link href="/dashboard">
-                  <Button variant="outline" size="sm" className="border-gray-600 text-gray-300 hover:bg-gray-800">
+                  <Button variant="outline" size="sm">
                     Dashboard
                   </Button>
                 </Link>
