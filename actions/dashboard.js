@@ -1,8 +1,6 @@
 "use server";
 
-// import aj from "@/lib/arcjet";
 import { db } from "@/lib/prisma";
-// import { request } from "@arcjet/next";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
@@ -56,31 +54,29 @@ export async function createAccount(data) {
     const { userId } = await auth();
     if (!userId) throw new Error("Unauthorized");
 
-    // Get request data for ArcJet
-    const req = await request();
-
-    // Check rate limit
-    const decision = await aj.protect(req, {
-      userId,
-      requested: 1, // Specify how many tokens to consume
-    });
-
-    if (decision.isDenied()) {
-      if (decision.reason.isRateLimit()) {
-        const { remaining, reset } = decision.reason;
-        console.error({
-          code: "RATE_LIMIT_EXCEEDED",
-          details: {
-            remaining,
-            resetInSeconds: reset,
-          },
-        });
-
-        throw new Error("Too many requests. Please try again later.");
-      }
-
-      throw new Error("Request blocked");
-    }
+    // Comment out ArcJet-related code
+    // const req = await request();
+    // const decision = await aj.protect(req, {
+    //   userId,
+    //   requested: 1,
+    // });
+    // 
+    // if (decision.isDenied()) {
+    //   if (decision.reason.isRateLimit()) {
+    //     const { remaining, reset } = decision.reason;
+    //     console.error({
+    //       code: "RATE_LIMIT_EXCEEDED",
+    //       details: {
+    //         remaining,
+    //         resetInSeconds: reset,
+    //       },
+    //     });
+    // 
+    //     throw new Error("Too many requests. Please try again later.");
+    //   }
+    // 
+    //   throw new Error("Request blocked");
+    // }
 
     const user = await db.user.findUnique({
       where: { clerkUserId: userId },
@@ -130,7 +126,8 @@ export async function createAccount(data) {
     revalidatePath("/dashboard");
     return { success: true, data: serializedAccount };
   } catch (error) {
-    throw new Error(error.message);
+    console.error("Account creation error:", error);
+    throw new Error(error.message || "Failed to create account");
   }
 }
 
