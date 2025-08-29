@@ -15,7 +15,7 @@ export default function Home() {
     
     <div>
       <MainHero/>
-       <Features />
+      <Features />
       <Benefits />
       <Testimonials />
       <Pricing />

@@ -6,6 +6,7 @@ import { getUserAccounts, getDashboardData } from "@/actions/dashboard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PlusCircle } from "lucide-react";
+import {AccountCard }from "./_components/account-card";
 
 export default async function DashboardPage() {
   const clerkUser = await currentUser();
@@ -86,15 +87,7 @@ export default async function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {accounts && accounts.length > 0 ? (
             accounts.map((account) => (
-              <Card key={account.id}>
-                <CardHeader>
-                  <CardTitle>{account.name}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-xl font-bold">${account.balance.toFixed(2)}</p>
-                  <p className="text-sm text-gray-500">{account.type}</p>
-                </CardContent>
-              </Card>
+              <AccountCard key={account.id} account={account}/>
             ))
           ) : (
             <Card>
