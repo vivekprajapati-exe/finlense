@@ -59,7 +59,7 @@ export async function bulkDeleteTransactions(transactionIds) {
 
     if (!user) throw new Error("User not found");
 
-    // Get transactions to calculate balance changes
+    
     const transactions = await db.transaction.findMany({
       where: {
         id: { in: transactionIds },
@@ -67,7 +67,7 @@ export async function bulkDeleteTransactions(transactionIds) {
       },
     });
 
-    // Group transactions by account to update balances
+    
     const accountBalanceChanges = transactions.reduce((acc, transaction) => {
       const change =
         transaction.type === "EXPENSE"
@@ -77,9 +77,9 @@ export async function bulkDeleteTransactions(transactionIds) {
       return acc;
     }, {});
 
-    // Delete transactions and update account balances in a transaction
+    
     await db.$transaction(async (tx) => {
-      // Delete transactions
+      
       await tx.transaction.deleteMany({
         where: {
           id: { in: transactionIds },
@@ -87,7 +87,7 @@ export async function bulkDeleteTransactions(transactionIds) {
         },
       });
 
-      // Update account balances
+      
       for (const [accountId, balanceChange] of Object.entries(
         accountBalanceChanges
       )) {
@@ -124,7 +124,7 @@ export async function updateDefaultAccount(accountId) {
       throw new Error("User not found");
     }
 
-    // First, unset any existing default account
+  
     await db.account.updateMany({
       where: {
         userId: user.id,
@@ -133,7 +133,7 @@ export async function updateDefaultAccount(accountId) {
       data: { isDefault: false },
     });
 
-    // Then set the new default account
+  
     const account = await db.account.update({
       where: {
         id: accountId,
