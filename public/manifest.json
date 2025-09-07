@@ -1,0 +1,20 @@
+{
+  "name": "FinLense - Smart Finance Vision",
+  "short_name": "FinLense",
+  "description": "Democratize personal finance management through AI-powered insights and intelligent budgeting",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    }
+  ],
+  "categories": ["finance", "productivity", "business"],
+  "lang": "en",
+  "dir": "ltr"
+}

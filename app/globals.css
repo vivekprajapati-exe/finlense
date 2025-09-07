@@ -68,6 +68,24 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+    /* Improve text rendering on mobile */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Prevent horizontal scrolling */
+    overflow-x: hidden;
+  }
+  
+  /* Mobile-specific improvements */
+  @media (max-width: 768px) {
+    html {
+      /* Better font scaling on mobile */
+      font-size: 16px;
+    }
+    
+    body {
+      /* Prevent zoom on input focus on iOS */
+      -webkit-text-size-adjust: 100%;
+    }
   }
 }
 
@@ -75,26 +93,116 @@ body {
 
   .gradient {
     @apply bg-gradient-to-br from-blue-600 to-purple-600;
-
   }
 
   .gradient-title {
-
     @apply gradient font-extrabold tracking-tighter
      pr-2 pb-2 text-transparent bg-clip-text;
   }
+
+  /* Mobile-friendly utilities */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+  
+  .safe-area-inset {
+    /* Support for iPhone notch and Android navigation */
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .mobile-scroll {
+    /* Smooth scrolling on mobile */
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  
+  /* Better tap targets for mobile */
+  .tap-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Hide scrollbars on mobile but keep functionality */
+  .mobile-hidden-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .mobile-hidden-scroll::-webkit-scrollbar {
+    display: none;
+  }
 }
 
-.hero-image-wrapper {
-  perspective: 1000px;
+/* Component-specific mobile improvements */
+@layer components {
+  /* Better mobile table styling */
+  .mobile-table {
+    @apply block overflow-x-auto whitespace-nowrap;
+  }
+  
+  .mobile-table table {
+    @apply w-full min-w-max;
+  }
+  
+  /* Improved mobile form styling */
+  .mobile-form input,
+  .mobile-form textarea,
+  .mobile-form select {
+    @apply text-base; /* Prevent zoom on iOS */
+  }
+  
+  /* Better mobile card hover states */
+  @media (hover: hover) {
+    .mobile-card:hover {
+      @apply shadow-lg scale-105;
+      transition: all 0.2s ease-in-out;
+    }
+  }
+  
+  /* Touch-friendly buttons */
+  .mobile-button {
+    @apply min-h-[44px] px-4 py-2 text-base;
+  }
 }
 
-.hero-image {
-  transform: rotateX(0deg) scale(1);
-  transition: transform 0.5s ease-out;
-  will-change: transform;
+/* Progressive enhancement for larger screens */
+@media (min-width: 768px) {
+  .hero-image-wrapper {
+    perspective: 1000px;
+  }
+
+  .hero-image {
+    transform: rotateX(0deg) scale(1);
+    transition: transform 0.5s ease-out;
+    will-change: transform;
+  }
+
+  .hero-image.tilted {
+    transform: rotateX(15deg) scale(1);
+  }
 }
 
-.hero-image.tilted {
-  transform: rotateX(15deg) scale(1);
+/* Dark mode improvements for mobile */
+@media (prefers-color-scheme: dark) {
+  .dark-mobile-optimize {
+    /* Better contrast for dark mode on mobile */
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 70%;
+  }
+}
+
+/* Print styles for receipts and reports */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-optimize {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
 }

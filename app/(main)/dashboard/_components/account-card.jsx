@@ -50,34 +50,51 @@ export function AccountCard({ account }) {
   }, [error]);
 
   return (
-    <Card className="hover:shadow-md transition-shadow group relative">
-      <Link href={`/account/${id}`}>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium capitalize">
-            {name}
-          </CardTitle>
+    <Card className="hover:shadow-lg transition-all duration-200 group relative border-muted/40 hover:border-muted/60">
+      <Link href={`/account/${id}`} className="block">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+          <div className="flex items-center space-x-2">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <CreditCard className="w-4 h-4 text-primary" />
+            </div>
+            <div>
+              <CardTitle className="text-base sm:text-lg font-semibold capitalize truncate max-w-[120px] sm:max-w-none">
+                {name}
+              </CardTitle>
+              {isDefault && (
+                <Badge variant="secondary" className="text-xs mt-1">
+                  Default
+                </Badge>
+              )}
+            </div>
+          </div>
           <Switch
             checked={isDefault}
             onClick={handleDefaultChange}
             disabled={updateDefaultLoading}
+            className="flex-shrink-0"
           />
         </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold">
-            ${parseFloat(balance).toFixed(2)}
+        
+        <CardContent className="pb-4">
+          <div className="space-y-2">
+            <div className="text-2xl sm:text-3xl font-bold">
+              ${parseFloat(balance).toFixed(2)}
+            </div>
+            <p className="text-xs sm:text-sm text-muted-foreground">
+              {type.charAt(0) + type.slice(1).toLowerCase()} Account
+            </p>
           </div>
-          <p className="text-xs text-muted-foreground">
-            {type.charAt(0) + type.slice(1).toLowerCase()} Account
-          </p>
         </CardContent>
-        <CardFooter className="flex justify-between text-sm text-muted-foreground">
-          <div className="flex items-center">
-            <ArrowUpRight className="mr-1 h-4 w-4 text-green-500" />
-            Income
+        
+        <CardFooter className="flex justify-between text-xs sm:text-sm text-muted-foreground pt-4 border-t border-muted/20">
+          <div className="flex items-center space-x-1">
+            <ArrowUpRight className="h-3 w-3 sm:h-4 sm:w-4 text-green-500" />
+            <span>Income</span>
           </div>
-          <div className="flex items-center">
-            <ArrowDownRight className="mr-1 h-4 w-4 text-red-500" />
-            Expense
+          <div className="flex items-center space-x-1">
+            <ArrowDownRight className="h-3 w-3 sm:h-4 sm:w-4 text-red-500" />
+            <span>Expense</span>
           </div>
         </CardFooter>
       </Link>
