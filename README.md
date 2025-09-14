@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Finlense
 
-## Getting Started
+## 1. Project Overview
 
-First, run the development server:
+FinLense is an AI-driven personal finance platform that automates expense tracking using receipt scanning, intelligent categorization, and predictive analytics.
+The goal is to reduce manual bookkeeping effort and provide users with real-time financial insights, helping them make smarter financial decisions.
+
+## 2. Problem Statement
+
+Managing personal finances is time-consuming, error-prone, and fragmented across multiple apps and receipts.
+Most existing tools either lack automation or fail at providing predictive insights.
+FinLense solves this by leveraging AI to automate data entry, categorize expenses, and deliver real-time dashboards for financial awareness.
+
+## 3. Features
+
+**Authentication**: Secure login/signup using Clerk Authentication.
+
+- **Account Management**: Create, view, and manage financial accounts.
+- **Transaction Management**: Add, view, and filter transactions.
+- **Receipt Scanning AI**: Upload receipts for automatic OCR-based data extraction (GPT-4 Vision planned).
+- **Budget Management**: Set budgets, track expenses, and receive alerts.
+- **Analytics Dashboard**: Insights into spending patterns, financial goals, and trends.
+- **AI Insights**: Predictive recommendations for smarter financial planning.
+
+## 4. Tech Stack
+
+**Frontend**: Next.js, React, TailwindCSS, Shadcn UI
+
+- **Backend**: Next.js API Routes, Prisma ORM
+- **Database**: PostgreSQL (Supabase)
+- **AI/ML**: OpenAI GPT-4 Vision (receipt scanning)
+- **Authentication**: Clerk
+- **Integrations**: Resend (emails), Inngest (background jobs), Arcjet (security)
+
+## 5. User Flow
+
+![User Flow](./public/assets/User_Flow.jpeg)
+
+## 6. Landing Page
+
+![Landing Page](./public/assets/Landing_Page.png)
+
+## 7. Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+1. Clone repository
+https://github.com/vivekprajapati-exe/finlense
+git pull origin main
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```bash
+2. Install dependencies
+npm install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```bash
+3. Setup environment variables
+cp .env.example .env
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+4. Run development server
+npm run dev
+```
 
-## Learn More
+## 8. Documentation
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+FINLENSE/
+│── actions/              # Business logic (account.js, dashboard.js, seed.js)
+│── app/                  # Next.js App Router
+│── components/           # UI components (Shadcn + custom)
+│── data/                 # Static/dynamic seed data
+│── hooks/                # React hooks for state/data management
+│── lib/                  # Utility functions
+│── node_modules/         # Dependencies
+│── prisma/               # Database schema + migrations
+│── public/               # Static assets (images, icons, etc.)
+│── .clerk/               # Clerk authentication configs
+│── .gitignore            # Git ignore rules
+│── components.json       # Shadcn UI config
+│── eslint.config.mjs     # ESLint rules
+│── jsconfig.json         # Path aliases & JS config
+│── middleware.js         # API middleware
+│── next.config.mjs       # Next.js project config
+│── package.json          # Project dependencies
+│── package-lock.json     # Dependency lock file
+│── postcss.config.mjs    # PostCSS config
+│── PRD.md                # Product Requirements Document
+│── README.md             # Project documentation
+│── tailwind.config.mjs   # Tailwind CSS config
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 9. Usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Sign up or log in using Clerk authentication.
+2. Create or link accounts.
+3. Upload a receipt to test AI-powered scanning (when available).
+4. View transactions in the dashboard.
+5. Track budgets and analyze spending trends.
 
-## Deploy on Vercel
+## 10. Future Scope
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Short-Term**: Multilingual receipts, email invoice parsing
+- **Mid-Term**: Tax-ready reports, budgeting alerts, analytics enhancements
+- **Long-Term**: AI financial advisor, multi-currency support, shared budgets, bank API integrations
