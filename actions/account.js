@@ -69,15 +69,17 @@ export async function bulkDeleteTransactions(transactionIds) {
 
     
     const accountBalanceChanges = transactions.reduce((acc, transaction) => {
+      // Convert Decimal to number for proper arithmetic
+      const amount = parseFloat(transaction.amount.toString());
       const change =
         transaction.type === "EXPENSE"
-          ? transaction.amount
-          : -transaction.amount;
+          ? amount
+          : -amount;
       acc[transaction.accountId] = (acc[transaction.accountId] || 0) + change;
       return acc;
     }, {});
 
-    
+    // delete transactions and update acccount balances in a transaction
     await db.$transaction(async (tx) => {
       
       await tx.transaction.deleteMany({
@@ -91,11 +93,14 @@ export async function bulkDeleteTransactions(transactionIds) {
       for (const [accountId, balanceChange] of Object.entries(
         accountBalanceChanges
       )) {
+        // Ensure balanceChange is a proper number
+        const incrementValue = parseFloat(balanceChange.toFixed(2));
+        
         await tx.account.update({
           where: { id: accountId },
           data: {
             balance: {
-              increment: balanceChange,
+              increment: incrementValue,
             },
           },
         });
@@ -103,7 +108,7 @@ export async function bulkDeleteTransactions(transactionIds) {
     });
 
     revalidatePath("/dashboard");
-    revalidatePath("/account/[id]");
+    revalidatePath("/account", "layout");
 
     return { success: true };
   } catch (error) {
@@ -143,7 +148,7 @@ export async function updateDefaultAccount(accountId) {
     });
 
     revalidatePath("/dashboard");
-    return { success: true, data: serializeTransaction(account) };
+    return { success: true, data: serializeDecimal(account) };
   } catch (error) {
     return { success: false, error: error.message };
   }

@@ -206,3 +206,8 @@ body {
     box-shadow: none !important;
   }
 }
+
+*::selection{
+  background: #1d5200;
+  color: #ffffff;
+}

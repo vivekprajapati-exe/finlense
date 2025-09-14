@@ -65,16 +65,22 @@ const RECURRING_INTERVALS = {
 };
 
 export function TransactionTable({ transactions }) {
+
+  const router = useRouter();
   const [selectedIds, setSelectedIds] = useState([]);
   const [sortConfig, setSortConfig] = useState({
     field: "date",
     direction: "desc",
   });
+
+
+
   const [searchTerm, setSearchTerm] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [recurringFilter, setRecurringFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const router = useRouter();
+
+
 
   // Memoized filtered and sorted transactions
   const filteredAndSortedTransactions = useMemo(() => {
@@ -125,6 +131,8 @@ export function TransactionTable({ transactions }) {
     return result;
   }, [transactions, searchTerm, typeFilter, recurringFilter, sortConfig]);
 
+
+
   // Pagination calculations
   const totalPages = Math.ceil(
     filteredAndSortedTransactions.length / ITEMS_PER_PAGE
@@ -172,15 +180,16 @@ export function TransactionTable({ transactions }) {
       !window.confirm(
         `Are you sure you want to delete ${selectedIds.length} transactions?`
       )
-    )
+    ){
       return;
-
+    }
     deleteFn(selectedIds);
   };
 
   useEffect(() => {
-    if (deleted && !deleteLoading) {
-      toast.error("Transactions deleted successfully");
+    if (deleted?.success && !deleteLoading) {
+      toast.success("Transactions deleted successfully");
+      setSelectedIds([]);
     }
   }, [deleted, deleteLoading]);
 
@@ -195,6 +204,8 @@ export function TransactionTable({ transactions }) {
     setCurrentPage(newPage);
     setSelectedIds([]); // Clear selections on page change
   };
+
+
 
   return (
     <div className="space-y-4">
@@ -253,6 +264,7 @@ export function TransactionTable({ transactions }) {
 
           <div className="flex gap-2">
             {/* Bulk Actions */}
+
             {selectedIds.length > 0 && (
               <Button
                 variant="destructive"
@@ -263,6 +275,7 @@ export function TransactionTable({ transactions }) {
                 <Trash className="h-4 w-4 mr-2" />
                 Delete ({selectedIds.length})
               </Button>
+
             )}
 
             {(searchTerm || typeFilter || recurringFilter) && (

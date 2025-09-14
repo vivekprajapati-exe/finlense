@@ -3,7 +3,6 @@ import "./globals.css";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { ClerkProvider } from "@clerk/nextjs";
-import { AuthCheck } from "@/components/AuthCheck";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/theme-provider";
 
@@ -55,9 +54,9 @@ export default function RootLayout({ children }) {
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
+            className = "text-white"
           >
             <div className="min-h-screen bg-background text-foreground flex flex-col">
-              <AuthCheck />
               <Header />
               <main className="flex-1 flex flex-col">
                 {children}

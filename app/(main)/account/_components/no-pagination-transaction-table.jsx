@@ -162,8 +162,9 @@ export function NoPaginationTransactionTable({ transactions }) {
   };
 
   useEffect(() => {
-    if (deleted && !deleteLoading) {
-      toast.error("Transactions deleted successfully");
+    if (deleted?.success && !deleteLoading) {
+      toast.success("Transactions deleted successfully");
+      setSelectedIds([]);
     }
   }, [deleted, deleteLoading]);
 
