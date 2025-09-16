@@ -12,8 +12,21 @@ const useFetch = (cb) => {
 
     try {
       const response = await cb(...args);
-      setData(response);
-      setError(null);
+      
+      // Check if response has success/error structure (server actions)
+      if (response && typeof response === 'object' && 'success' in response) {
+        if (response.success) {
+          setData(response);
+          setError(null);
+        } else {
+          setError(new Error(response.error || 'An error occurred'));
+          toast.error(response.error || 'An error occurred');
+        }
+      } else {
+        // Handle regular responses
+        setData(response);
+        setError(null);
+      }
     } catch (error) {
       setError(error);
       toast.error(error.message);
