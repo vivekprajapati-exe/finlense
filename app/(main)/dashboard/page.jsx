@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PlusCircle } from "lucide-react";
 import {AccountCard }from "./_components/account-card";
 import { BudgetTracker } from "./_components/budget-tracker";
+import { Suspense } from "react";
+import { DashboardOverview } from "./_components/transation-overview";
 
 export default async function DashboardPage() {
   const clerkUser = await currentUser();
@@ -41,6 +43,12 @@ export default async function DashboardPage() {
       </div>
 
       {/* Overview Section - Responsive Flex Layout */}
+      <Suspense fallback={"LOading Overview..."}>
+       <DashboardOverview
+       accounts={accounts}
+       transactions={transactions || []}
+       />
+      </Suspense>
       <section>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
           <h2 className="text-lg sm:text-xl lg:text-2xl font-bold">Overview</h2>
