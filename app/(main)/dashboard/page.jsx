@@ -10,6 +10,7 @@ import {AccountCard }from "./_components/account-card";
 import { BudgetTracker } from "./_components/budget-tracker";
 import { Suspense } from "react";
 import { DashboardOverview } from "./_components/transation-overview";
+import { getCurrentBudget } from "@/actions/budget";
 
 export default async function DashboardPage() {
   const clerkUser = await currentUser();
@@ -22,10 +23,18 @@ export default async function DashboardPage() {
   // Sync user with database
   const user = await checkUser();
   
-  // Fetch user's accounts and transactions
-  const accounts = await getUserAccounts();
-  const transactions = await getDashboardData();
+ const [accounts, transactions] = await Promise.all([
+    getUserAccounts(),
+    getDashboardData(),
+  ]);
   
+const defaultAccount = accounts?.find((account) => account.isDefault);
+
+  // Get budget for default account
+  let budgetData = null;
+  if (defaultAccount) {
+    budgetData = await getCurrentBudget(defaultAccount.id);
+  }
   const totalBalance = accounts?.reduce((sum, account) => sum + account.balance, 0) || 0;
   
   return (
@@ -104,7 +113,10 @@ export default async function DashboardPage() {
           
           {/* Budget Tracker */}
           <div className="lg:w-[320px] flex-shrink-0">
-            <BudgetTracker/>
+            <BudgetTracker 
+              initialBudget={budgetData?.budget}
+              currentExpenses={budgetData?.currentExpenses || 0}
+            />
           </div>
         </div>
       </section>
@@ -130,46 +142,6 @@ export default async function DashboardPage() {
         </Card>
       </section>
 
-      {/* Recent Activity Section - Replace the old Budget Progress */}
-      <section className="space-y-4">
-        <h2 className="text-lg sm:text-xl lg:text-2xl font-bold">Recent Activity</h2>
-        <Card className="border border-gray-200 dark:border-gray-800">
-          <CardContent className="pt-6">
-            {transactions && transactions.length > 0 ? (
-              <div className="space-y-4">
-                {transactions.slice(0, 3).map((transaction) => (
-                  <div key={transaction.id} className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-800">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                        transaction.type === "INCOME" ? "bg-green-100 text-green-600 dark:bg-green-900/30" : "bg-red-100 text-red-600 dark:bg-red-900/30"
-                      }`}>
-                        {transaction.type === "INCOME" ? "+" : "-"}
-                      </div>
-                      <div>
-                        <p className="font-medium">{transaction.name}</p>
-                        <p className="text-xs text-muted-foreground">{new Date(transaction.date).toLocaleDateString()}</p>
-                      </div>
-                    </div>
-                    <p className={`font-medium ${transaction.type === "INCOME" ? "text-green-600" : "text-red-600"}`}>
-                      {transaction.type === "INCOME" ? "+" : "-"}${transaction.amount.toFixed(2)}
-                    </p>
-                  </div>
-                ))}
-                <div className="text-center pt-2">
-                  <Button variant="outline" size="sm" asChild>
-                    <a href="/transactions">View All Transactions</a>
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              <div className="text-center py-8">
-                <p className="text-muted-foreground mb-4">No recent transactions</p>
-                <Button variant="outline" size="sm">Add Transaction</Button>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </section>
 
       {/* Account Grid - Mobile Responsive */}
       <section className="space-y-4">

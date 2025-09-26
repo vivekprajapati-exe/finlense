@@ -2,9 +2,10 @@
 import React, { useState } from 'react'
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
 import Link from 'next/link'
-import { Eye, Menu, X } from 'lucide-react'
+import { Eye, Menu, Wallet, X } from 'lucide-react'
 import { Button } from './ui/button'
 import { ThemeToggle } from './theme-toggle'
+
 
 function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -51,6 +52,11 @@ function Header() {
                 <Link href="/dashboard">
                   <Button variant="outline" size="sm">
                     Dashboard
+                  </Button>
+                </Link>
+                <Link href="/transaction/create">
+                  <Button variant="outline" size="sm" className="flex items-center">
+                    <span className="mr-1"><Wallet/></span>Add Transaction
                   </Button>
                 </Link>
                 <UserButton 
@@ -109,6 +115,11 @@ function Header() {
                   <Link href="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
                     <Button variant="outline" className="w-full justify-center">
                       Dashboard
+                    </Button>
+                  </Link>
+                  <Link href="/transaction/create" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Button variant="outline" className="w-full justify-center">
+                      + Add Transaction
                     </Button>
                   </Link>
                   <div className="flex justify-center pt-2">
