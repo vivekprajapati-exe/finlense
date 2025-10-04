@@ -3,25 +3,25 @@ import { Star } from "lucide-react"
 
 const testimonials = [
   {
-    name: "Sarah Chen",
-    role: "Software Engineer",
+    name: "Atreya Gosavi",
+    role: "B.Tech Aspirant at VIT",
     content:
-      "This app literally saved my financial life. The AI caught spending patterns I never noticed. Now I'm actually saving money instead of wondering where it all went.",
-    rating: 5,
+      "As a student managing limited pocket money, this app helped me track every expense. The AI reminders make sure I never overspend before the month ends.",
+    rating: 4,
   },
   {
-    name: "Marcus Rodriguez",
+    name: "Tanush Karpe",
     role: "Small Business Owner",
     content:
-      "Finally, a finance app that doesn't make me feel like I need an MBA to use it. The AI insights are spot-on and the interface is actually enjoyable.",
+      "Running a business means every rupee counts. This app helps me monitor cash flow and categorize expenses effortlessly—like having a smart accountant in my pocket.",
     rating: 5,
   },
   {
-    name: "Emily Watson",
-    role: "Marketing Manager",
+    name: "Priyanka Dalvi",
+    role: "Electro-Plating Analyst",
     content:
-      "I was skeptical about AI managing my finances, but this app proved me wrong. It's like having a personal financial advisor who actually understands my lifestyle.",
-    rating: 5,
+      "My job demands precision, and this app matches that. The AI’s insights on spending patterns are detailed and accurate, helping me plan better for monthly expenses.",
+    rating: 4,
   },
 ]
 
