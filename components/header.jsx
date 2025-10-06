@@ -29,7 +29,7 @@ function Header() {
             <SignedOut>
               <div className="flex items-center space-x-2">
                 <SignInButton 
-                  mode="modal" 
+                  mode = "redirect"
                   fallbackRedirectUrl="/dashboard"
                 >
                   <Button variant="outline" size="sm">
@@ -37,7 +37,7 @@ function Header() {
                   </Button>
                 </SignInButton>
                 <SignUpButton 
-                  mode="modal" 
+                  mode = "redirect"
                   fallbackRedirectUrl="/dashboard"
                 >
                   <Button size="sm">
