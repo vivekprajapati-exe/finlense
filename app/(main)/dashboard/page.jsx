@@ -40,9 +40,9 @@ const defaultAccount = accounts?.find((account) => account.isDefault);
   return (
     <div className="w-full space-y-6 sm:space-y-8">
       {/* Welcome Section - Enhanced with Gradient */}
-      <div className="rounded-lg p-6 mb-2 text-white ">
+      <div className="rounded-lg p-6 mb-2 text-foreground ">
         <div className="text-center sm:text-left">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 bg-clip-text text-white ">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2 bg-clip-text text-foreground ">
             Welcome back{clerkUser?.firstName ? `, ${clerkUser.firstName}` : ''}!
           </h1>
           <p className="text-muted-foreground text-sm sm:text-base">

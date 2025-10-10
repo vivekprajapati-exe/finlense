@@ -1,4 +1,4 @@
-"use client";"use client";
+"use client"; "use client";
 
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -54,25 +54,25 @@ export function AddTransactionForm({
     defaultValues:
       editMode && initialData
         ? {
-            type: initialData.type,
-            amount: initialData.amount.toString(),
-            description: initialData.description,
-            accountId: initialData.accountId,
-            category: initialData.category,
-            date: new Date(initialData.date),
-            isRecurring: initialData.isRecurring,
-            ...(initialData.recurringInterval && {
-              recurringInterval: initialData.recurringInterval,
-            }),
-          }
+          type: initialData.type,
+          amount: initialData.amount.toString(),
+          description: initialData.description,
+          accountId: initialData.accountId,
+          category: initialData.category,
+          date: new Date(initialData.date),
+          isRecurring: initialData.isRecurring,
+          ...(initialData.recurringInterval && {
+            recurringInterval: initialData.recurringInterval,
+          }),
+        }
         : {
-            type: "EXPENSE",
-            amount: "",
-            description: "",
-            accountId: accounts.find((ac) => ac.isDefault)?.id,
-            date: new Date(),
-            isRecurring: false,
-          },
+          type: "EXPENSE",
+          amount: "",
+          description: "",
+          accountId: accounts.find((ac) => ac.isDefault)?.id,
+          date: new Date(),
+          isRecurring: false,
+        },
   });
 
   const {
@@ -96,15 +96,38 @@ export function AddTransactionForm({
 
   const handleScanComplete = (scannedData) => {
     if (scannedData) {
+      // Update form with scanned data
+      setValue("description", scannedData.description);
       setValue("amount", scannedData.amount.toString());
-      setValue("date", new Date(scannedData.date));
-      if (scannedData.description) {
-        setValue("description", scannedData.description);
+
+      // If there's a valid date
+      if (scannedData.date) {
+        try {
+          const dateObj = new Date(scannedData.date);
+          if (!isNaN(dateObj.getTime())) {
+            setValue("date", dateObj);
+          }
+        } catch (e) {
+          console.error("Invalid date format from receipt:", e);
+        }
       }
+
+      // Set category if it matches one of our categories
       if (scannedData.category) {
-        setValue("category", scannedData.category);
+        const matchedCategory = categories.find(
+          cat => cat.id.toLowerCase() === scannedData.category.toLowerCase() ||
+            cat.name.toLowerCase() === scannedData.category.toLowerCase()
+        );
+
+        if (matchedCategory) {
+          setValue("category", matchedCategory.id);
+        }
       }
-      toast.success("Receipt scanned successfully");
+
+      // Set transaction type (usually EXPENSE for receipts)
+      setValue("type", scannedData.type || "EXPENSE");
+
+      // Show success message is already handled by the ReceiptScanner component
     }
   };
 
@@ -283,10 +306,10 @@ export function AddTransactionForm({
             Description
             <span className="text-xs ml-1 text-muted-foreground">(optional)</span>
           </label>
-          <Input 
-            placeholder="Enter description" 
-            className="h-10 focus-visible:ring-primary/50" 
-            {...register("description")} 
+          <Input
+            placeholder="Enter description"
+            className="h-10 focus-visible:ring-primary/50"
+            {...register("description")}
           />
           {errors.description && (
             <p className="text-sm text-destructive">{errors.description.message}</p>
@@ -349,9 +372,9 @@ export function AddTransactionForm({
         >
           Cancel
         </Button>
-        <Button 
-          type="submit" 
-          className="w-full h-12 shadow-md order-1 sm:order-2" 
+        <Button
+          type="submit"
+          className="w-full h-12 shadow-md order-1 sm:order-2"
           disabled={transactionLoading || !accounts?.length}
         >
           {transactionLoading ? (
