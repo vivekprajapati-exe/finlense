@@ -105,10 +105,6 @@ export function ReceiptScanner({ onScanComplete }) {
     <Card className="overflow-hidden">
       <CardContent className="pt-6">
         <div className="flex flex-col items-center text-center space-y-4">
-          <div className="bg-primary/10 p-3 rounded-full">
-            <Receipt className="h-6 w-6 text-primary" />
-          </div>
-
           <div>
             <h3 className="text-lg font-semibold">AI Receipt Scanner</h3>
             <p className="text-sm text-muted-foreground mt-1">

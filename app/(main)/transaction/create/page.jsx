@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default async function AddTransactionPage({ searchParams }) {
-  // Await searchParams to fix Next.js 15+ compatibility
   const resolvedSearchParams = await searchParams;
   const accounts = await getUserAccounts();
   const editId = resolvedSearchParams?.edit;
@@ -36,8 +35,8 @@ export default async function AddTransactionPage({ searchParams }) {
               {editId ? "Edit Transaction" : "Add New Transaction"}
             </h1>
             <p className="text-muted-foreground mt-1">
-              {editId 
-                ? "Update your transaction details below" 
+              {editId
+                ? "Update your transaction details below"
                 : "Record your income or expense transaction"
               }
             </p>
