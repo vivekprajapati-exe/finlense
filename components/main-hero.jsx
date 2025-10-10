@@ -58,7 +58,7 @@ export function MainHero() {
           <div className="hidden sm:block w-1 h-1 bg-gray-600 rounded-full" />
           <span>No Credit Card Required</span>
           <div className="hidden sm:block w-1 h-1 bg-gray-600 rounded-full" />
-          <span>10,000+ Happy Users</span>
+          <span>Happy Users</span>
         </div>
       </div>
     </section>
