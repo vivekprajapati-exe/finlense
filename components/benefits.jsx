@@ -16,10 +16,10 @@ export function Benefits() {
           <Card className="bg-green-950/30 border-green-800/50 text-center p-8">
             <CardContent className="p-0">
               <DollarSign className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h3 className="text-4xl font-bold text-white mb-2">$2,847</h3>
+              <h3 className="text-4xl font-bold text-white mb-2">$1000</h3>
               <p className="text-green-300 font-semibold mb-2">Average Savings</p>
               <p className="text-gray-300 text-sm">
-                Users save an average of $2,847 in their first year. That's a lot of avocado toast.
+                Users save an average of $1000 in their first year. That's a lot of avocado toast.
               </p>
             </CardContent>
           </Card>
