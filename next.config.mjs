@@ -4,6 +4,8 @@ const nextConfig = {
         turbo: {
             root: process.cwd(),
         },
+        // Optimize Edge runtime bundles
+        serverComponentsExternalPackages: ['@prisma/client', '@google/generative-ai'],
     },
     images: {
         remotePatterns: [
@@ -43,6 +45,18 @@ const nextConfig = {
                 ],
             },
         ]
+    },
+    // Reduce middleware bundle size
+    webpack: (config, { isServer, nextRuntime }) => {
+        // Exclude heavy packages from Edge runtime
+        if (nextRuntime === 'edge') {
+            config.resolve.alias = {
+                ...config.resolve.alias,
+                '@prisma/client': false,
+                '@google/generative-ai': false,
+            };
+        }
+        return config;
     },
 };
 
